@@ -1,0 +1,10 @@
+{
+  "name": "deepseek-prompt-nexus",
+  "version": "12.0.0",
+  "private": true,
+  "description": "MV3 extension tooling: manifest validation + unit tests (node:test). No build step — the extension loads unpacked directly from this directory.",
+  "scripts": {
+    "test": "node --test tests/",
+    "check": "node tests/validate-manifest.js && node --test tests/"
+  }
+}

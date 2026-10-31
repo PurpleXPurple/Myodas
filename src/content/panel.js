@@ -414,12 +414,21 @@
         set("dsnx-global-tokens", led.totalTokens.toLocaleString());
         set("dsnx-global-chats", String(Object.keys(led.sessions).length));
       }).catch(() => {});
-      const pct = Math.min(((tokState.lastComputed || 0) / C.DEFAULTS.CONTEXT_LIMIT) * 100, 100);
+      const limit = (this._ctxLimit || C.DEFAULTS.CONTEXT_LIMIT);
+      const pct = Math.min(((tokState.lastComputed || 0) / limit) * 100, 100);
       const bar = this.node.querySelector("#dsnx-context-bar");
       if (bar) {
         bar.style.width = pct + "%";
         bar.classList.toggle("hot", pct > 90);
       }
+    },
+
+    /** Popup can change the context limit; keep a cached copy for the gauge. */
+    loadContextLimit() {
+      return global.Nexus.store
+        .getLocal(global.Nexus.CONST.KEYS.SETTINGS)
+        .then((s) => { this._ctxLimit = (s && s.contextLimit) || null; })
+        .catch(() => {});
     },
 
     /* ---- theme view (shared editor) ---------------------------------------- */

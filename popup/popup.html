@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!--
+  popup/popup.html — Prompt Nexus action popup.
+  CSP: no inline scripts, no inline styles beyond none; everything external
+  so the page works under Chrome extension default CSP ('self' only).
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Prompt Nexus</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="ph-head">
+    <span class="ph-logo" aria-hidden="true"></span>
+    <h1>Prompt Nexus</h1>
+    <span id="ph-version" class="ph-version"></span>
+  </header>
+
+  <nav class="ph-tabs" role="tablist" id="ph-tabs">
+    <button class="ph-tab active" role="tab" data-tab="tokens">Tokens</button>
+    <button class="ph-tab" role="tab" data-tab="prompts">Prompts</button>
+    <button class="ph-tab" role="tab" data-tab="skills">Skills</button>
+    <button class="ph-tab" role="tab" data-tab="theme">Theme</button>
+    <button class="ph-tab" role="tab" data-tab="settings">Settings</button>
+  </nav>
+
+  <main id="ph-main">
+    <!-- Tokens -->
+    <section class="ph-view" data-view="tokens">
+      <div class="ph-stat"><span class="ph-stat-num" id="ph-total-tokens">–</span><span class="ph-stat-label">Total tokens observed</span></div>
+      <div class="ph-stat"><span class="ph-stat-num" id="ph-live-tokens">–</span><span class="ph-stat-label">Active chat (last snapshot)</span></div>
+      <p class="ph-hint">Live numbers come from the chat tab's snapshots; open a DeepSeek chat for them to update.</p>
+    </section>
+
+    <!-- Prompts / Skills share the same list layout -->
+    <section class="ph-view" data-view="prompts" hidden>
+      <form class="ph-addrow" id="ph-add-prompt">
+        <input type="text" id="ph-prompt-name" placeholder="Name" maxlength="80" required />
+        <textarea id="ph-prompt-text" placeholder="Prompt text…" rows="3" required></textarea>
+        <button type="submit" class="ph-btn primary">Save prompt</button>
+      </form>
+      <ul class="ph-list" id="ph-prompt-list"></ul>
+    </section>
+
+    <section class="ph-view" data-view="skills" hidden>
+      <form class="ph-addrow" id="ph-add-skill">
+        <input type="text" id="ph-skill-name" placeholder="Skill name" maxlength="80" required />
+        <input type="text" id="ph-skill-desc" placeholder="Short description" maxlength="140" />
+        <textarea id="ph-skill-text" placeholder="Skill instructions…" rows="3" required></textarea>
+        <button type="submit" class="ph-btn primary">Save skill</button>
+      </form>
+      <ul class="ph-list" id="ph-skill-list"></ul>
+    </section>
+
+    <!-- Theme -->
+    <section class="ph-view" data-view="theme" hidden>
+      <div id="ph-theme-editor"><!-- built by shared theme-engine buildEditor() --></div>
+      <div class="ph-btnrow">
+        <button id="ph-theme-apply" class="ph-btn primary">Apply theme</button>
+        <button id="ph-theme-reset" class="ph-btn secondary">Reset to native</button>
+      </div>
+      <p class="ph-hint">The same editor is used inside the chat page sidebar — changes sync live via storage.</p>
+    </section>
+
+    <!-- Settings -->
+    <section class="ph-view" data-view="settings" hidden>
+      <label class="ph-field">
+        <span>GitHub account token (fine-grained PAT recommended)</span>
+        <input type="password" id="ph-gh-token" autocomplete="off" spellcheck="false" placeholder="github_pat_… or ghp_…" />
+      </label>
+      <label class="ph-field">
+        <span>Hugging Face access token</span>
+        <input type="password" id="ph-hf-token" autocomplete="off" spellcheck="false" placeholder="hf_…" />
+      </label>
+      <p class="ph-hint">Tokens are kept in <strong>session storage</strong> (memory only, cleared when the browser exits) and are only ever sent by the background worker to api.github.com and huggingface.co.</p>
+      <label class="ph-field">
+        <span>Context limit (tokens)</span>
+        <input type="number" id="ph-context-limit" min="1000" max="2000000" step="1000" />
+      </label>
+      <div class="ph-btnrow">
+        <button id="ph-save-settings" class="ph-btn primary">Save settings</button>
+        <button id="ph-export" class="ph-btn secondary">Export backup</button>
+        <button id="ph-import" class="ph-btn secondary">Import backup</button>
+        <input type="file" id="ph-import-file" accept="application/json,.json" hidden />
+      </div>
+      <p id="ph-status" class="ph-status" role="status"></p>
+    </section>
+  </main>
+
+  <!-- Load order mirrors the content script: constants → util → storage → tokenizer → api → theme → popup -->
+  <script src="../src/shared/constants.js"></script>
+  <script src="../src/shared/util.js"></script>
+  <script src="../src/shared/storage.js"></script>
+  <script src="../src/shared/tokenizer.js"></script>
+  <script src="../src/shared/api-client.js"></script>
+  <script src="../src/shared/theme-engine.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

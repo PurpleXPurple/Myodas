@@ -168,6 +168,7 @@
     N.theme.watch();
     await N.theme.load().catch(() => N.theme.apply(null));
     N.tokenizer.load().catch(() => {}); // warm up offline data (non-blocking)
+    N.panel.loadContextLimit();
     N.slash.setSkills(await N.store.list("skills").catch(() => []));
     injectInterceptor();
     ensureButton();
@@ -179,6 +180,7 @@
       if (area !== "local") return;
       const K = N.CONST.KEYS;
       if (changes[K.SKILLS]) N.slash.setSkills(changes[K.SKILLS].newValue || []);
+      if (changes[K.SETTINGS]) N.panel.loadContextLimit();
       if (changes[K.PROMPTS] || changes[K.SKILLS] || changes[K.ARMED]) {
         if (N.panel.isOpen()) N.panel.renderList(N.panel.tab);
       }
