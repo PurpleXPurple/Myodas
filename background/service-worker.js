@@ -8,10 +8,11 @@
  * v12.x keeps only wiring here; logic lives in the imported modules.
  * ========================================================================== */
 
+/* Load order matters: constants → util → api (planners) → handlers. */
 importScripts(
-  "../shared/constants.js",
-  "../shared/util.js",
-  "../shared/api-client.js",
+  "../src/shared/constants.js",
+  "../src/shared/util.js",
+  "../src/shared/api-client.js",
   "net-handlers.js",
   "state-handlers.js"
 );

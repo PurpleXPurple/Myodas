@@ -1,0 +1,123 @@
+/* ==========================================================================
+ * popup/popup.css — popup chrome. Colors reference the same --dsnx-* custom
+ * properties that theme-engine.js maintains; because the popup is a separate
+ * document it re-applies vars from storage on load (see popup.js), so this
+ * file only needs fallbacks.
+ * ========================================================================== */
+:root {
+  --dsnx-bg-base: #0a0a0a;
+  --dsnx-bg-card: #141414;
+  --dsnx-bg-hover: #1f1f1f;
+  --dsnx-border: #2a2a2a;
+  --dsnx-text-primary: #ffffff;
+  --dsnx-text-secondary: #8b8b8b;
+  --dsnx-accent: #4d7cfe;
+  --dsnx-on-accent: #ffffff;
+  --dsnx-danger: #ef4444;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  width: 360px;
+  min-height: 420px;
+  margin: 0;
+  font: 13px/1.45 system-ui, "Segoe UI", Roboto, sans-serif;
+  background: var(--dsnx-bg-base);
+  color: var(--dsnx-text-primary);
+}
+
+.ph-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px 8px;
+}
+.ph-head h1 { font-size: 15px; margin: 0; flex: 1; }
+.ph-version { color: var(--dsnx-text-secondary); font-size: 11px; }
+.ph-logo {
+  width: 18px; height: 18px;
+  background: var(--dsnx-accent);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+.ph-tabs { display: flex; gap: 2px; padding: 0 10px; border-bottom: 1px solid var(--dsnx-border); }
+.ph-tab {
+  appearance: none; background: none; border: none; cursor: pointer;
+  color: var(--dsnx-text-secondary);
+  padding: 8px 10px;
+  border-bottom: 2px solid transparent;
+  font: inherit;
+}
+.ph-tab:hover { color: var(--dsnx-text-primary); background: var(--dsnx-bg-hover); }
+.ph-tab.active { color: var(--dsnx-accent); border-bottom-color: var(--dsnx-accent); }
+
+#ph-main { padding: 12px 14px 16px; }
+.ph-view[hidden] { display: none; }
+
+.ph-stat { display: flex; flex-direction: column; padding: 8px 0; }
+.ph-stat-num { font-size: 24px; font-weight: 600; color: var(--dsnx-accent); }
+.ph-stat-label { color: var(--dsnx-text-secondary); }
+
+.ph-hint { color: var(--dsnx-text-secondary); font-size: 11.5px; margin: 8px 0; }
+
+.ph-addrow { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.ph-addrow input, .ph-addrow textarea, .ph-field input, .ph-field textarea {
+  background: var(--dsnx-bg-card);
+  border: 1px solid var(--dsnx-border);
+  color: var(--dsnx-text-primary);
+  border-radius: 6px;
+  padding: 7px 9px;
+  font: inherit;
+  width: 100%;
+}
+.ph-addrow input:focus, .ph-addrow textarea:focus, .ph-field input:focus {
+  outline: 2px solid var(--dsnx-accent);
+  outline-offset: -1px;
+}
+
+.ph-btn {
+  appearance: none; border: 1px solid var(--dsnx-border); border-radius: 6px;
+  padding: 7px 12px; font: inherit; cursor: pointer;
+  background: var(--dsnx-bg-card); color: var(--dsnx-text-primary);
+}
+.ph-btn:hover { background: var(--dsnx-bg-hover); }
+.ph-btn.primary { background: var(--dsnx-accent); color: var(--dsnx-on-accent); border-color: transparent; }
+.ph-btn.primary:hover { filter: brightness(1.1); }
+.ph-btn.danger { color: var(--dsnx-danger); }
+
+.ph-btnrow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+.ph-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.ph-item {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--dsnx-bg-card);
+  border: 1px solid var(--dsnx-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.ph-item-main { flex: 1; min-width: 0; }
+.ph-item-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ph-item-sub { color: var(--dsnx-text-secondary); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.ph-field { display: block; margin: 10px 0; }
+.ph-field > span { display: block; margin-bottom: 4px; color: var(--dsnx-text-secondary); }
+
+.ph-status { min-height: 16px; font-size: 12px; color: var(--dsnx-accent); }
+.ph-status.error { color: var(--dsnx-danger); }
+
+/* ---- shared theme-editor markup (produced by src/shared/theme-engine.js) ----
+   Same class names as the in-page sidebar so both UIs look identical.       */
+.dsnx-theme-field { margin: 8px 0; }
+.dsnx-theme-field > label { display: block; margin-bottom: 4px; color: var(--dsnx-text-secondary); }
+.dsnx-theme-row { display: flex; gap: 8px; align-items: center; }
+.dsnx-theme-row input[type="color"] {
+  width: 40px; height: 30px; padding: 0; cursor: pointer;
+  border: 1px solid var(--dsnx-border); border-radius: 6px; background: transparent;
+}
+.dsnx-theme-row input[type="text"] {
+  width: 120px;
+  background: var(--dsnx-bg-card); border: 1px solid var(--dsnx-border);
+  color: var(--dsnx-text-primary); border-radius: 6px; padding: 6px 8px; font: inherit;
+}
+.dsnx-theme-row input[type="text"].invalid { border-color: var(--dsnx-danger); }
