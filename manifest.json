@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "DeepSeek Prompt Nexus",
+  "version": "11.2.0",
+  "description": "Skills, Prompts, Theming, and Real Token Counting.",
+  "permissions": ["storage", "activeTab", "scripting", "downloads"],
+  "host_permissions": [
+    "https://chat.deepseek.com/*",
+    "https://api.github.com/*",
+    "https://huggingface.co/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Prompt Nexus",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon128.png",
+      "48": "icon128.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon128.png",
+    "48": "icon128.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.deepseek.com/*"],
+      "js": ["themes.js", "tokenizer.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["tokenizer.js", "interceptor.js"],
+      "matches": ["https://chat.deepseek.com/*"]
+    }
+  ]
+}

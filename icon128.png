@@ -1,0 +1,6 @@
+<!-- Create a file named icon128.svg, paste this, then use an online converter to turn it into icon128.png -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect width="128" height="128" rx="24" fill="#141414"/>
+  <path d="M64 16 L104 40 L104 88 L64 112 L24 88 L24 40 Z" fill="none" stroke="#4d7cfe" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M44 80 V48 L84 80 V48" fill="none" stroke="#ececec" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
